@@ -6,7 +6,7 @@
 #    By: anquinte <anquinte@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/18 11:51:06 by anquinte          #+#    #+#              #
-#    Updated: 2024/06/22 21:54:39 by anquinte         ###   ########.fr        #
+#    Updated: 2024/06/26 11:11:53 by anquinte         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ LIB = ar rcs
 RM = rm -f
 NAME = libftprintf.a
 SRC = ft_printf.c ft_printchar.c ft_printnbr.c ft_printstr.c ft_printuns.c \
-		ft_printhex.c
+		ft_printhex.c ft_printpointer.c
 
 OBJ = $(SRC:.c=.o)
 INCLUDE = ft_printf.h
