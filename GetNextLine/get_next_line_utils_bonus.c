@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_utils.c                              :+:      :+:    :+:   */
+/*   get_next_line_utils_bonus.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anquinte <anquinte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/26 20:32:48 by anquinte          #+#    #+#             */
-/*   Updated: 2024/09/26 10:40:03 by anquinte         ###   ########.fr       */
+/*   Created: 2024/09/25 17:26:27 by anquinte          #+#    #+#             */
+/*   Updated: 2024/09/26 11:09:25 by anquinte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 size_t	ft_strlen(const char *str)
 {
@@ -27,7 +27,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	int		i;
 	int		j;
 	int		k;
-	char		*s;
+	char	*s;
 
 	i = 0;
 	j = 0;

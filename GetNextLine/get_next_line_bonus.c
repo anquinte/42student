@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anquinte <anquinte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/26 16:01:33 by anquinte          #+#    #+#             */
-/*   Updated: 2024/09/26 10:32:25 by anquinte         ###   ########.fr       */
+/*   Created: 2024/09/25 17:23:46 by anquinte          #+#    #+#             */
+/*   Updated: 2024/09/26 11:03:30 by anquinte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 static char	*set_line(char *line_buffer)
 {
@@ -58,36 +58,53 @@ char	*get_next_line(int fd)
 {
 	char		*buffer;
 	char		*line;
-	static char	*left_buffer;
+	static char	*left_buffer[__FD_SETSIZE];
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (0);
 	buffer = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
 	if (!buffer)
 		return (NULL);
-	line = fill_line(fd, buffer, left_buffer);
+	line = fill_line(fd, buffer, left_buffer[fd]);
 	free(buffer);
 	if (!line)
 		return (NULL);
-	left_buffer = set_line(line);
+	left_buffer[fd] = set_line(line);
 	return (line);
 }
-
-/*int main() {
-    int fd;
-    char *next_line;
-    int count;
+/*
+int main() {
+    int     fd;
+    int     fd2;
+    int     fd3;
+    char    *next_line;
+    int     count;
 
     count = 0;
     fd = open("prueba1.txt", O_RDONLY);
-    if (fd == -1) {
+    fd2 = open("prueba2.txt", O_RDONLY);
+    fd3 = open("prueba3.txt", O_RDONLY);
+    if (fd == -1 || fd2 == -1 || fd3 == -1) 
+    {
         perror("Error al abrir archivo");
         return 1;
     }
 
     while ((next_line = get_next_line(fd)) != NULL) {
         count++;
-        printf("[%d]: %s", count, next_line);
+        printf("[%d]: %s\n", count, next_line);
+        free(next_line);
+    }
+
+    while ((next_line = get_next_line(fd2)) != NULL) {
+        count++;
+        printf("[%d]: %s\n", count, next_line);
+        free(next_line);
+    }
+
+    while ((next_line = get_next_line(fd3)) != NULL) {
+        count++;
+        printf("[%d]: %s\n", count, next_line);
         free(next_line);
     }
 
@@ -96,6 +113,15 @@ char	*get_next_line(int fd)
         return 1;
     }
 
+    if (close(fd2) == -1) {
+        perror("Error al cerrar archivo");
+        return 1;
+    }
+
+    if (close(fd3) == -1) {
+        perror("Error al cerrar archivo");
+        return 1;
+    }
     return 0;
 }
 */
