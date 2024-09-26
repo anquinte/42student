@@ -6,7 +6,7 @@
 /*   By: anquinte <anquinte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 20:32:48 by anquinte          #+#    #+#             */
-/*   Updated: 2024/09/26 10:40:03 by anquinte         ###   ########.fr       */
+/*   Updated: 2024/09/26 17:26:36 by anquinte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	int		i;
 	int		j;
 	int		k;
-	char		*s;
+	char	*s;
 
 	i = 0;
 	j = 0;
@@ -49,25 +49,6 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	}
 	s[k] = '\0';
 	return (s);
-}
-
-size_t	ft_strlcpy(char *dst, const char *src, size_t size)
-{
-	size_t	len;
-	size_t	i;
-
-	len = ft_strlen(src);
-	i = 0;
-	if (size != 0)
-	{
-		while ((size - 1) > i && src[i] != '\0')
-		{
-			dst[i] = src[i];
-			i++;
-		}
-		dst[i] = '\0';
-	}
-	return (len);
 }
 
 char	*ft_strdup(const char *s1)
