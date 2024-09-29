@@ -6,43 +6,43 @@
 /*   By: anquinte <anquinte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 17:23:46 by anquinte          #+#    #+#             */
-/*   Updated: 2024/09/26 11:03:30 by anquinte         ###   ########.fr       */
+/*   Updated: 2024/09/29 19:16:25 by anquinte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line_bonus.h"
 
-static char	*set_line(char *line_buffer)
+static char	*extract_line(char *line)
 {
 	int		i;
 	char	*left_buffer;
 
 	i = 0;
-	while (line_buffer[i] != '\0' && line_buffer[i] != '\n')
+	while (line[i] != '\0' && line[i] != '\n')
 		i++;
-	if (!line_buffer[i] || !line_buffer[i + 1])
+	if (!line[i] || !line[i + 1])
 		return (NULL);
-	left_buffer = ft_substr(line_buffer, i + 1, ft_strlen(line_buffer) - i);
+	left_buffer = ft_substr(line, i + 1, ft_strlen(line) - i);
 	if (!left_buffer)
 		free(left_buffer);
-	line_buffer[i + 1] = '\0';
+	line[i + 1] = '\0';
 	return (left_buffer);
 }
 
-static char	*fill_line(int fd, char	*buffer, char *left_buffer)
+static char	*read_from_file(int fd, char	*buffer, char *left_buffer)
 {
 	char	*tmp;
-	ssize_t	rd;
+	ssize_t	bytes_read;
 
-	rd = 1;
-	while (rd > 0)
+	bytes_read = 1;
+	while (bytes_read > 0)
 	{
-		rd = read(fd, buffer, BUFFER_SIZE);
-		if (rd == -1)
+		bytes_read = read(fd, buffer, BUFFER_SIZE);
+		if (bytes_read == -1)
 			return (NULL);
-		else if (rd == 0)
+		else if (bytes_read == 0)
 			break ;
-		buffer[rd] = '\0';
+		buffer[bytes_read] = '\0';
 		if (!left_buffer)
 			left_buffer = ft_strdup("");
 		tmp = left_buffer;
@@ -58,19 +58,28 @@ char	*get_next_line(int fd)
 {
 	char		*buffer;
 	char		*line;
-	static char	*left_buffer[__FD_SETSIZE];
+	static char	*left_line[__FD_SETSIZE];
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (0);
 	buffer = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
 	if (!buffer)
 		return (NULL);
-	line = fill_line(fd, buffer, left_buffer[fd]);
+	line = read_from_file(fd, buffer, left_line[fd]);
 	free(buffer);
 	if (!line)
 		return (NULL);
-	left_buffer[fd] = set_line(line);
+	left_line[fd] = extract_line(line);
 	return (line);
+}
+size_t	ft_strlen(const char *str)
+{
+	size_t	i;
+
+	i = 0;
+	while (str[i] != '\0')
+		i++;
+	return (i);
 }
 /*
 int main() {
@@ -123,5 +132,4 @@ int main() {
         return 1;
     }
     return 0;
-}
-*/
+}*/

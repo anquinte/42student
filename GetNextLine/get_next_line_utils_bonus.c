@@ -6,21 +6,11 @@
 /*   By: anquinte <anquinte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 17:26:27 by anquinte          #+#    #+#             */
-/*   Updated: 2024/09/26 17:21:30 by anquinte         ###   ########.fr       */
+/*   Updated: 2024/09/29 16:01:44 by anquinte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line_bonus.h"
-
-size_t	ft_strlen(const char *str)
-{
-	size_t	i;
-
-	i = 0;
-	while (str[i] != '\0')
-		i++;
-	return (i);
-}
 
 char	*ft_strjoin(char const *s1, char const *s2)
 {
@@ -103,4 +93,22 @@ char	*ft_strchr(const char *s, int c)
 	if ((char)c == '\0')
 		return ((char *)s);
 	return (0);
+}
+size_t	ft_strlcpy(char *dst, const char *src, size_t size)
+{
+	size_t	len;
+	size_t	i;
+
+	len = ft_strlen(src);
+	i = 0;
+	if (size != 0)
+	{
+		while ((size - 1) > i && src[i] != '\0')
+		{
+			dst[i] = src[i];
+			i++;
+		}
+		dst[i] = '\0';
+	}
+	return (len);
 }

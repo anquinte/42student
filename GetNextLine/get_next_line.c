@@ -6,13 +6,13 @@
 /*   By: anquinte <anquinte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 16:01:33 by anquinte          #+#    #+#             */
-/*   Updated: 2024/09/26 10:32:25 by anquinte         ###   ########.fr       */
+/*   Updated: 2024/09/29 19:17:09 by anquinte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-static char	*set_line(char *line_buffer)
+static char	*extract_line(char *line_buffer)
 {
 	int		i;
 	char	*left_buffer;
@@ -29,7 +29,7 @@ static char	*set_line(char *line_buffer)
 	return (left_buffer);
 }
 
-static char	*fill_line(int fd, char	*buffer, char *left_buffer)
+static char	*read_from_file(int fd, char	*buffer, char *left_buffer)
 {
 	char	*tmp;
 	ssize_t	rd;
@@ -65,14 +65,22 @@ char	*get_next_line(int fd)
 	buffer = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
 	if (!buffer)
 		return (NULL);
-	line = fill_line(fd, buffer, left_buffer);
+	line = read_from_file(fd, buffer, left_buffer);
 	free(buffer);
 	if (!line)
 		return (NULL);
-	left_buffer = set_line(line);
+	left_buffer = extract_line(line);
 	return (line);
 }
+size_t	ft_strlen(const char *str)
+{
+	size_t	i;
 
+	i = 0;
+	while (str[i] != '\0')
+		i++;
+	return (i);
+}
 /*int main() {
     int fd;
     char *next_line;
